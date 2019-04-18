@@ -25,7 +25,7 @@ RUN set -ex \
 	&& echo 'mysql-server-5.5 mysql-server/root_password_again password ""' |debconf-set-selections \
 	#&& apt-get update 
 	&& apt-get install -y mysql-server \
-	&& rm -rf /var/lib/apt/lists/* \
+	# && rm -rf /var/lib/apt/lists/* \
 	
 	&& sed -i "s/post_max_size = 8M/post_max_size = 80M/g" /etc/php5/fpm/php.ini     \
 	&& sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 80M/g" /etc/php5/fpm/php.ini   \
