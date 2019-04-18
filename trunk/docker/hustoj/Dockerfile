@@ -33,13 +33,13 @@ RUN set -ex \
 	&& sed -i "s/max_input_time = 60/max_input_time = 360/g" /etc/php5/fpm/php.ini   \
 	&& sed -i "s/memory_limit = 128M/memory_limit = 256M/g" /etc/php5/fpm/php.ini   \
 	
-	&& /usr/sbin/useradd -m -u 1536 judge \
+	&& /usr/sbin/useradd -m -u 1536 judge 
 	
 #FROM daocloud.io/shiningrise/hustoj-dev-base
 
 # code
-#RUN set -ex \
-	&& cd / && git clone -b docker-dev https://github.com/shiningrise/hustoj.git \	
+RUN set -ex \
+	&& cd / && git clone -b docker-dev https://github.com/cart88/hustoj.git \	
 	&& mv /hustoj/trunk /home/judge/src \
 # clear
 	&& rm -R /hustoj \
