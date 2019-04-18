@@ -4,7 +4,7 @@
 FROM debian:jessie-slim
 #COPY ./sources.debian.list /etc/apt/sources.list
 	
-COPY ./docker-entrypoint.sh /usr/local/bin/
+# COPY ./docker-entrypoint.sh /usr/local/bin/
 
 RUN set -ex \
 	&& apt-get update \
@@ -17,6 +17,9 @@ RUN set -ex \
 		nginx \
 		python \
 		python3 \
+		php5-xdebug \
+		vim \
+		samba \
 	#	fp-compiler \
 	#	openjdk-7-jdk \
 	#	clang
@@ -38,12 +41,14 @@ RUN set -ex \
 #FROM daocloud.io/shiningrise/hustoj-dev-base
 
 # code
+COPY ./docker-entrypoint.sh /usr/local/bin/
 RUN set -ex \
 	&& cd / && git clone -b docker-dev https://github.com/cart88/hustoj.git \	
 	&& mv /hustoj/trunk /home/judge/src \
 # clear
 	&& rm -R /hustoj \
 	&& apt-get autoremove -y --purge git \
+	
 	
 #
 	&& USER=`cat /etc/mysql/debian.cnf |grep user|head -1|awk  '{print $3}'` \
@@ -85,10 +90,10 @@ RUN set -ex \
 	#&& service mysql stop \
 	&& chmod +x /usr/local/bin/docker-entrypoint.sh \
 	&& ln -s /usr/local/bin/docker-entrypoint.sh  /docker-entrypoint.sh 
-	RUN set -ex \
-	&& apt-get install -y \
-	   php5-xdebug \
-	   vim
+	# RUN set -ex \
+	# && apt-get install -y \
+	#    php5-xdebug \
+	#    vim
 
 COPY nginx/default.conf /etc/nginx/sites-available/default
 	
