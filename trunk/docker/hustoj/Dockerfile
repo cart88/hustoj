@@ -84,7 +84,11 @@ RUN set -ex \
 	&& echo "insert into jol.privilege values('admin','administrator','N');"|mysql -h localhost -u$USER -p$PASSWORD \
 	#&& service mysql stop \
 	&& chmod +x /usr/local/bin/docker-entrypoint.sh \
-	&& ln -s /usr/local/bin/docker-entrypoint.sh  /docker-entrypoint.sh
+	&& ln -s /usr/local/bin/docker-entrypoint.sh  /docker-entrypoint.sh 
+	RUN set -ex \
+	&& apt-get install -y \
+	   php5-xdebug \
+	   vim
 
 COPY nginx/default.conf /etc/nginx/sites-available/default
 	
