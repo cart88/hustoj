@@ -22,6 +22,7 @@ RUN set -ex \
 		samba \
 		net-tools \
 		iputils-ping \
+		telnet \
 	#	fp-compiler \
 	#	openjdk-7-jdk \
 	#	clang
@@ -91,6 +92,17 @@ RUN set -ex \
 	# && apt-get install -y \
 	#    php5-xdebug \
 	#    vim
+
+	RUN set -ex \
+	&& xdebug_config='/etc/php5/fpm/conf.d/20-xdebug.ini' \
+	&& echo   "[XDebug]" >> $xdebug_config \
+	&& echo   "xdebug.remote_enable = 1" >> $xdebug_config \
+	&& echo   "xdebug.remote_autostart = 1" >> $xdebug_config \
+	&& echo   "xdebug.remote_host=192.168.2.214" >> $xdebug_config \
+	&& echo   "xdebug.remote_handler=dbgp" >> $xdebug_config \
+	&& echo   "xdebug.remote_port=9000" >> $xdebug_config \
+	&& echo   "xdebug.idekey=\"PHPSTORM\"" >> $xdebug_config \
+
 
 COPY nginx/default.conf /etc/nginx/sites-available/default
 WORKDIR /home/judge/
