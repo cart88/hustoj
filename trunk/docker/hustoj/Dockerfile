@@ -101,7 +101,7 @@ RUN set -ex \
 	&& echo   "xdebug.remote_host=192.168.2.214" >> $xdebug_config \
 	&& echo   "xdebug.remote_handler=dbgp" >> $xdebug_config \
 	&& echo   "xdebug.remote_port=9000" >> $xdebug_config \
-	&& echo   "xdebug.idekey=\"PHPSTORM\"" >> $xdebug_config \
+	&& echo   "xdebug.idekey=\"PHPSTORM\"" >> $xdebug_config
 
 
 COPY nginx/default.conf /etc/nginx/sites-available/default
