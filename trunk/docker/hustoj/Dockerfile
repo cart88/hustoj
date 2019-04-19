@@ -20,6 +20,8 @@ RUN set -ex \
 		php5-xdebug \
 		vim \
 		samba \
+		net-tools \
+		iputils-ping \
 	#	fp-compiler \
 	#	openjdk-7-jdk \
 	#	clang
@@ -29,13 +31,11 @@ RUN set -ex \
 	#&& apt-get update 
 	&& apt-get install -y mysql-server \
 	# && rm -rf /var/lib/apt/lists/* \
-	
 	&& sed -i "s/post_max_size = 8M/post_max_size = 80M/g" /etc/php5/fpm/php.ini     \
 	&& sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 80M/g" /etc/php5/fpm/php.ini   \
 	&& sed -i "s/max_execution_time = 30/max_execution_time = 180/g" /etc/php5/fpm/php.ini   \
 	&& sed -i "s/max_input_time = 60/max_input_time = 360/g" /etc/php5/fpm/php.ini   \
 	&& sed -i "s/memory_limit = 128M/memory_limit = 256M/g" /etc/php5/fpm/php.ini   \
-	
 	&& /usr/sbin/useradd -m -u 1536 judge 
 	
 #FROM daocloud.io/shiningrise/hustoj-dev-base
@@ -48,8 +48,6 @@ RUN set -ex \
 # clear
 	&& rm -R /hustoj \
 	&& apt-get autoremove -y --purge git \
-	
-	
 #
 	&& USER=`cat /etc/mysql/debian.cnf |grep user|head -1|awk  '{print $3}'` \
 	&& PASSWORD=`cat /etc/mysql/debian.cnf |grep password|head -1|awk  '{print $3}'` \
@@ -68,7 +66,6 @@ RUN set -ex \
 	&& sed -i "s/DB_USER=\"root\"/DB_USER=\"$USER\"/g" src/web/config/system.conf.php   \
 	&& sed -i "s/DB_PASS=\"root\"/DB_PASS=\"$PASSWORD\"/g" src/web/config/system.conf.php   \
 	&& chown www-data src/web/upload data   \
-
 # judged
 	&& cd /home/judge/src/core/judged \
     && make \
@@ -96,7 +93,6 @@ RUN set -ex \
 	#    vim
 
 COPY nginx/default.conf /etc/nginx/sites-available/default
-	
 WORKDIR /home/judge/
 EXPOSE 80
 VOLUME ["/data"]
