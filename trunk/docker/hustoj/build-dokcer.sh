@@ -12,4 +12,4 @@ docker rm hustoj-cpp
 docker rmi hustoj-cpp
 docker build -f Dockerfile -t hustoj-cpp  ./
 # docker run -d -it --privileged --name hustoj-cpp -p 8080:80 -v /host_mnt/d/test/hhh/mysql/:/data/ -v /host_mnt/d/test/hhh/code/:/hustoj/trunk/ hustoj-cpp
-docker run -d -it --privileged --name hustoj-cpp -p 8080:80 -v /host_mnt/d/test/hhh/mysql/:/data/ -v /host_mnt/c/Users/l/Desktop/新建文件夹/t2/hustoj/:/hustoj/ hustoj-cpp
+docker run -d -it --privileged --name hustoj-cpp -p 8080:80 -p 3306:3306 -v /host_mnt/d/test/hhh/mysql/:/data/ -v /host_mnt/c/Users/l/Desktop/新建文件夹/t2/hustoj/:/hustoj/ hustoj-cpp

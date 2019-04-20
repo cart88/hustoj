@@ -84,6 +84,8 @@ RUN set -ex \
 	&& service mysql status \
 	#&& USER=`cat /etc/mysql/debian.cnf |grep user|head -1|awk  '{print $3}'` \
 	#&& PASSWORD=`cat /etc/mysql/debian.cnf |grep password|head -1|awk  '{print $3}'` \
+	# 打开数据库远程连接
+	&& mysql -h localhost -u$USER -p$PASSWORD< /home/judge/src/install/db_init.sql \
 	&& mysql -h localhost -u$USER -p$PASSWORD< /home/judge/src/install/db.sql \
 	&& echo "insert into jol.privilege values('admin','administrator','N');"|mysql -h localhost -u$USER -p$PASSWORD \
 	#&& service mysql stop \
@@ -108,6 +110,7 @@ RUN set -ex \
 COPY nginx/default.conf /etc/nginx/sites-available/default
 WORKDIR /home/judge/
 EXPOSE 80
+EXPOSE 3306
 VOLUME ["/data","/hustoj"]
 
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
