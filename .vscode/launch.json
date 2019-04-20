@@ -11,7 +11,7 @@
             // "stopOnEntry":true,
             "port": 9000,
             "pathMappings": {
-                "/home/judge/src/web": "${workspaceRoot}/trunk/web"
+                "/hustoj/trunk/web": "${workspaceRoot}/trunk/web"
             }
         },
         {
