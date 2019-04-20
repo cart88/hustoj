@@ -46,7 +46,7 @@ COPY ./docker-entrypoint.sh /usr/local/bin/
 RUN set -ex \
 	&& cd / && git clone -b docker-dev https://github.com/cart88/hustoj.git \	
 	# && mv /hustoj/trunk /home/judge/src \
-	&& ln /hustoj/trunk /home/judge/src \
+	&& ln -s /hustoj/trunk /home/judge/src \
 # clear
 	# && rm -R /hustoj \
 	# && apt-get autoremove -y --purge git \
@@ -108,7 +108,7 @@ RUN set -ex \
 COPY nginx/default.conf /etc/nginx/sites-available/default
 WORKDIR /home/judge/
 EXPOSE 80
-VOLUME ["/data","/home/judge/src"]
+VOLUME ["/data","/hustoj"]
 
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 #CMD judged /home/judge debug && tail -f /dev/null
