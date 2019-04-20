@@ -45,10 +45,11 @@ RUN set -ex \
 COPY ./docker-entrypoint.sh /usr/local/bin/
 RUN set -ex \
 	&& cd / && git clone -b docker-dev https://github.com/cart88/hustoj.git \	
-	&& mv /hustoj/trunk /home/judge/src \
+	# && mv /hustoj/trunk /home/judge/src \
+	&& ln /hustoj/trunk /home/judge/src \
 # clear
-	&& rm -R /hustoj \
-	&& apt-get autoremove -y --purge git \
+	# && rm -R /hustoj \
+	# && apt-get autoremove -y --purge git \
 #
 	&& USER=`cat /etc/mysql/debian.cnf |grep user|head -1|awk  '{print $3}'` \
 	&& PASSWORD=`cat /etc/mysql/debian.cnf |grep password|head -1|awk  '{print $3}'` \
@@ -107,7 +108,7 @@ RUN set -ex \
 COPY nginx/default.conf /etc/nginx/sites-available/default
 WORKDIR /home/judge/
 EXPOSE 80
-VOLUME ["/data"]
+VOLUME ["/data","/home/judge/src"]
 
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 #CMD judged /home/judge debug && tail -f /dev/null
