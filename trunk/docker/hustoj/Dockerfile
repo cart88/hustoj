@@ -78,6 +78,8 @@ RUN set -ex \
     && chmod +x judge_client \
     && cp judge_client /usr/bin \
 	&& cd /home/judge/ \
+	&& IP=`ifconfig eth0 |grep inet |awk '{print $2}' |awk -F: '{print $2}'` \
+	&& sed -i "s/127.0.0.1/$IP/g" /etc/mysql/my.cnf \
 # db
 	&& chown -R mysql:mysql /var/lib/mysql  \
 	&& service mysql restart \
